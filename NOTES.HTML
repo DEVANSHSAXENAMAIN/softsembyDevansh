@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSS CODING | Educational Notes Portal</title>
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+      :root {
+        --gold-primary: #ffc107;
+        --gold-dark: #ffb300;
+        --gold-light: #ffecb3;
+        --bg-cream: #fffdf0;
+        --text-main: #3e2723;
+        --text-dim: #795548;
+        --glass-white: rgba(255, 255, 255, 0.7);
+        --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        --clay-shadow: 12px 12px 24px #ebe7d5, -12px -12px 24px #ffffff;
+        --tree-line: #ffe082;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg-cream);
+        color: var(--text-main);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* --- GOLDEN DUST PARTICLES --- */
+      #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 80px;
+        background: rgba(255, 253, 240, 0.6);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8%;
+        z-index: 1000;
+        border-bottom: 1px solid var(--gold-light);
+      }
+
+      .nav-brand {
+        font-weight: 800;
+        font-size: 1.6rem;
+        color: var(--gold-dark);
+        text-decoration: none;
+        letter-spacing: -0.5px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+        align-items: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover {
+        color: var(--gold-dark);
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gold-dark);
+        transition: var(--transition);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .glow-notes {
+        color: var(--gold-dark) !important;
+        text-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+        animation: notesGlow 2s infinite alternate;
+      }
+      @keyframes notesGlow {
+        from {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1.05);
+          text-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+        }
+      }
+
+      .locked-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        margin-top: 80px;
+      }
+
+      /* NEW BLURRED GLOW BOX STYLE */
+      .hero-glass-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 193, 7, 0.5);
+        border-radius: 40px;
+        padding: 60px 40px;
+        box-shadow: 0 0 30px rgba(255, 193, 7, 0.2),
+          inset 0 0 15px rgba(255, 255, 255, 0.5);
+        max-width: 900px;
+        width: 100%;
+        animation: heroGlow 3s infinite alternate ease-in-out;
+        transition: var(--transition);
+      }
+
+      .hero-glass-card:hover {
+        border-color: var(--gold-primary);
+        box-shadow: 0 0 50px rgba(255, 193, 7, 0.4),
+          inset 0 0 20px rgba(255, 255, 255, 0.6);
+        transform: translateY(-5px);
+      }
+
+      @keyframes heroGlow {
+        from {
+          border-color: rgba(255, 193, 7, 0.3);
+          box-shadow: 0 0 20px rgba(255, 193, 7, 0.15);
+        }
+        to {
+          border-color: rgba(255, 193, 7, 0.7);
+          box-shadow: 0 0 40px rgba(255, 193, 7, 0.35);
+        }
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 20px;
+        line-height: 1.1;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        color: var(--text-dim);
+        max-width: 650px;
+        margin: 0 auto 40px;
+      }
+
+      /* --- TREE SYSTEM SECTION --- */
+      .tree-section {
+        padding: 40px 8% 120px;
+        min-height: 100vh;
+      }
+
+      .tree-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        width: 100%;
+      }
+
+      /* TREE ELEMENTS */
+      .tree-root-label {
+        background: var(--gold-primary);
+        color: white;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 800;
+        margin-bottom: 80px;
+        box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+        position: relative;
+        z-index: 10;
+      }
+
+      .tree-root-label::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        width: 2px;
+        height: 80px;
+        background: var(--tree-line);
+      }
+
+      .tree-branch-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+      }
+
+      /* Horizontal connection line */
+      .tree-branch-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: var(--tree-line);
+        z-index: 1;
+      }
+
+      /* --- GRID & CARDS --- */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 40px;
+        width: 100%;
+        z-index: 2;
+        position: relative;
+      }
+
+      .card-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Vertical line from horizontal bar to card */
+      .card-wrapper::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        width: 2px;
+        height: 20px;
+        background: var(--tree-line);
+      }
+
+      .card {
+        background: var(--bg-cream);
+        padding: 35px 25px;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--clay-shadow);
+        border: 2px solid white;
+        animation: cardFadeIn 0.6s ease-out backwards;
+        width: 100%;
+        max-width: 300px;
+      }
+
+      @keyframes cardFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .card:hover {
+        transform: translateY(-10px) scale(1.03);
+        background: white;
+        box-shadow: 20px 20px 40px #e0dbc6, -10px -10px 20px #ffffff;
+        border-color: var(--gold-primary);
+      }
+
+      .card i {
+        font-size: 2.5rem;
+        color: var(--gold-dark);
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .card h3 {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      /* --- TYPE SELECTOR TREE --- */
+      .type-selector-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: slideUp 0.5s ease;
+      }
+
+      .type-options-row {
+        display: flex;
+        gap: 60px;
+        position: relative;
+        margin-top: 40px;
+      }
+
+      .type-options-row::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: 20%;
+        right: 20%;
+        height: 2px;
+        background: var(--tree-line);
+      }
+
+      .type-btn-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .type-btn-wrapper::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        width: 2px;
+        height: 20px;
+        background: var(--tree-line);
+      }
+
+      .type-btn {
+        padding: 20px 40px;
+        border-radius: 25px;
+        border: 2px solid var(--gold-light);
+        background: white;
+        cursor: pointer;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: var(--transition);
+        box-shadow: var(--clay-shadow);
+        color: var(--text-main);
+      }
+
+      .type-btn:hover {
+        border-color: var(--gold-primary);
+        background: var(--gold-light);
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      /* --- READING AREA --- */
+      .reading-area {
+        background: white;
+        padding: 60px;
+        border-radius: 40px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+        max-width: 900px;
+        margin: 40px auto;
+        border-top: 10px solid var(--gold-primary);
+        animation: fadeInUp 0.8s ease;
+      }
+
+      .reading-area h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+        color: var(--gold-dark);
+        border-bottom: 2px solid var(--bg-cream);
+        padding-bottom: 15px;
+      }
+
+      .fine-note-content {
+        line-height: 1.9;
+        font-size: 1.15rem;
+        color: #444;
+      }
+
+      .keyword {
+        color: var(--gold-dark);
+        font-weight: 700;
+        background: #fff9e6;
+        padding: 2px 8px;
+        border-radius: 6px;
+      }
+
+      /* PDF CARDS */
+      .pdf-download-card {
+        background: #fdfaf0;
+        padding: 30px;
+        border-radius: 25px;
+        border: 2px dashed var(--gold-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        transition: 0.3s;
+      }
+      .pdf-download-card:hover {
+        border-color: var(--gold-primary);
+        background: white;
+      }
+
+      .back-btn {
+        background: var(--gold-dark);
+        color: white;
+        padding: 12px 28px;
+        border-radius: 15px;
+        border: none;
+        cursor: pointer;
+        font-weight: 700;
+        margin-bottom: 30px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(255, 179, 0, 0.2);
+      }
+      .back-btn:hover {
+        background: var(--text-main);
+        transform: translateX(-5px);
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: #fff9e6;
+        padding: 50px 0;
+        text-align: center;
+        border-top: 1px solid var(--gold-light);
+      }
+
+      footer p {
+        font-weight: 700;
+        color: var(--text-dim);
+        font-size: 0.95rem;
+        opacity: 0.8;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .tree-branch-container::before {
+          left: 5%;
+          right: 5%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 15px 5%;
+          flex-direction: column;
+          height: auto;
+          gap: 10px;
+        }
+        .nav-links {
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .tree-branch-container::before {
+          display: none;
+        }
+        .card-wrapper::before {
+          display: none;
+        }
+        .type-options-row {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .type-options-row::before,
+        .type-btn-wrapper::before {
+          display: none;
+        }
+        .reading-area {
+          padding: 30px;
+          border-radius: 25px;
+        }
+        .hero-glass-card {
+          padding: 40px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav>
+      <a href="#" onclick="window.location.reload()" class="nav-brand"
+        >GSS CODING</a
+      >
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" onclick="window.location.reload()">HOME</a>
+        </li>
+        <li><a href="syllabus.html">SYLLABUS</a></li>
+        <li><a href="#tree-area" class="glow-notes">NOTES</a></li>
+        <li>
+          <a href="#" class="locked-link"><i class="fas fa-lock"></i> SECRET</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <!-- HERO TEXT WRAPPED IN A BLURRED GLOW BOX -->
+        <div class="hero-glass-card">
+          <div class="hero-content">
+            <h1>Notes <br />Short & Detailed PDF</h1>
+            <p>
+              A structured learning experience with a tree-based subject layout,
+              offering both short notes for quick revision and detailed notes
+              for deep understanding.
+            </p>
+            <button
+              class="back-btn"
+              onclick="document.getElementById('tree-area').scrollIntoView()"
+              style="
+                margin: 0 auto;
+                padding: 18px 50px;
+                border-radius: 50px;
+                font-size: 1.1rem;
+              "
+            >
+              Explore Notes <i class="fas fa-arrow-down"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tree-area" class="tree-section">
+        <div id="dynamic-container" class="tree-container">
+          <!-- Tree System dynamically injected here -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Developer - Devansh Saxena | 2025</p>
+    </footer>
+
+    <script>
+      const notesData = {
+        PYTHON: {
+          icon: "fa-brands fa-python",
+          units: {
+            "Unit I: Introduction": {
+              fine: "Basics of Python, <span class='keyword'>Syntax</span>, variables, aur environment setup. Python ek high-level language hai jo readability par focus karti hai.",
+              pdfUrl: "#",
+            },
+            "Unit II: Control Structures": {
+              fine: "Conditionals (if-else) aur <span class='keyword'>Loops</span> (for, while) ka upyog karke logic build karna.",
+              pdfUrl: "#",
+            },
+            "Unit III: Functions & Modules": {
+              fine: "<span class='keyword'>Reusable Code</span> likhne ke liye functions aur modules ka mahatva.",
+              pdfUrl: "#",
+            },
+            "Unit IV: File Handling": {
+              fine: "External files ke saath <span class='keyword'>Data Read/Write</span> operations perform karna.",
+              pdfUrl: "#",
+            },
+            "Unit V: OOP Concepts": {
+              fine: "<span class='keyword'>Classes</span>, Objects, aur Inheritance jaise concepts se code ko manage karna.",
+              pdfUrl: "#",
+            },
+          },
+        },
+        "UNIX AND SHELL PROGRAMMING": {
+          icon: "fa-terminal",
+          units: {
+            "Unit I: Unix Architecture": {
+              fine: "Unix ka <span class='keyword'>Kernel</span> aur Shell architecture samajhna.",
+              pdfUrl: "#",
+            },
+            "Unit II: Commands & Files": {
+              fine: "File system navigation ke liye <span class='keyword'>Standard Commands</span> ka use.",
+              pdfUrl: "#",
+            },
+            "Unit III: Vi Editor": {
+              fine: "Unix environment mein <span class='keyword'>Text Editing</span> aur tools.",
+              pdfUrl: "#",
+            },
+            "Unit IV: Shell Scripting Basics": {
+              fine: "Automation ke liye <span class='keyword'>Shell Scripts</span> likhna.",
+              pdfUrl: "#",
+            },
+            "Unit V: Advanced Shell": {
+              fine: "Process management aur <span class='keyword'>System Administration</span> tools.",
+              pdfUrl: "#",
+            },
+          },
+        },
+        "COMPUTER NETWORKING": {
+          icon: "fa-network-wired",
+          units: {
+            "Unit I: OSI Model": {
+              fine: "Networking ki <span class='keyword'>7-Layer Hierarchy</span> aur unke functions.",
+              pdfUrl: "#",
+            },
+            "Unit II: TCP/IP Suite": {
+              fine: "Internet protocols ka <span class='keyword'>Standard Architecture</span>.",
+              pdfUrl: "#",
+            },
+            "Unit III: IP Addressing": {
+              fine: "IPv4 aur IPv6 networks ko <span class='keyword'>Manage</span> karna.",
+              pdfUrl: "#",
+            },
+            "Unit IV: Routing & Switching": {
+              fine: "Data packets ko sahi rasta dikhane ki <span class='keyword'>Techniques</span>.",
+              pdfUrl: "#",
+            },
+            "Unit V: Network Security": {
+              fine: "Data protection ke liye <span class='keyword'>Firewalls</span> aur encryption.",
+              pdfUrl: "#",
+            },
+          },
+        },
+        ACCOUNTANCY: {
+          icon: "fa-calculator",
+          units: {
+            "Unit I: Introduction": {
+              fine: "Accounting ke <span class='keyword'>Mool Siddhant</span> aur concepts.",
+              pdfUrl: "#",
+            },
+            "Unit II: Financial Statements": {
+              fine: "Balance Sheet aur <span class='keyword'>Profit/Loss</span> analysis.",
+              pdfUrl: "#",
+            },
+            "Unit III: Cost Accounting": {
+              fine: "Business expenses aur <span class='keyword'>Budgetary Control</span>.",
+              pdfUrl: "#",
+            },
+            "Unit IV: Cash Flow": {
+              fine: "Company ke <span class='keyword'>Liquidity</span> status ko track karna.",
+              pdfUrl: "#",
+            },
+            "Unit V: Taxation Basics": {
+              fine: "<span class='keyword'>Financial Compliance</span> aur Taxes ki samajh.",
+              pdfUrl: "#",
+            },
+          },
+        },
+        "SOFTWARE ENGINEERING": {
+          icon: "fa-diagram-project",
+          units: {
+            "Unit I: SDLC Models": {
+              fine: "Waterfall, <span class='keyword'>Agile</span>, aur Iterative development models.",
+              pdfUrl: "#",
+            },
+            "Unit II: Requirement Analysis": {
+              fine: "<span class='keyword'>SRS Documentation</span> aur client needs.",
+              pdfUrl: "#",
+            },
+            "Unit III: Software Design": {
+              fine: "System ki <span class='keyword'>Architecture</span> aur UI design principles.",
+              pdfUrl: "#",
+            },
+            "Unit IV: Testing & QA": {
+              fine: "Software ki <span class='keyword'>Quality Check</span> karne ke testing types.",
+              pdfUrl: "#",
+            },
+            "Unit V: Project Management": {
+              fine: "Teams aur <span class='keyword'>Development Timelines</span> ko manage karna.",
+              pdfUrl: "#",
+            },
+          },
+        },
+      };
+
+      const container = document.getElementById("dynamic-container");
+
+      // --- TREE NAVIGATION RENDERERS ---
+      function initTree() {
+        let html = `
+                <div class="tree-root-label">SUBJECTS TREE</div>
+                <div class="tree-branch-container">
+                    <div class="grid">
+            `;
+        for (const subject in notesData) {
+          html += `
+                    <div class="card-wrapper">
+                        <div class="card" onclick="openUnits('${subject}')">
+                            <i class="fas ${notesData[subject].icon}"></i>
+                            <h3>${subject}</h3>
+                            <p style="font-size:0.75rem; opacity:0.6; font-weight:600;">Units Expand Karein</p>
+                        </div>
+                    </div>
+                `;
+        }
+        html += `</div></div>`;
+        container.innerHTML = html;
+      }
+
+      function openUnits(subject) {
+        let html = `
+                <button class="back-btn" onclick="initTree()"><i class="fas fa-arrow-left"></i> Back to Subjects</button>
+                <div class="tree-root-label">${subject}</div>
+                <div class="tree-branch-container">
+                    <div class="grid">
+            `;
+        const units = notesData[subject].units;
+        for (const unitTitle in units) {
+          html += `
+                    <div class="card-wrapper">
+                        <div class="card" onclick="selectType('${subject}', '${unitTitle}')">
+                            <i class="fas fa-leaf"></i>
+                            <h3>${unitTitle}</h3>
+                        </div>
+                    </div>
+                `;
+        }
+        html += `</div></div>`;
+        container.innerHTML = html;
+        window.scrollTo({ top: container.offsetTop - 120, behavior: "smooth" });
+      }
+
+      function selectType(subject, unit) {
+        container.innerHTML = `
+                <button class="back-btn" onclick="openUnits('${subject}')"><i class="fas fa-arrow-left"></i> Back to Units</button>
+                <div class="tree-root-label">${unit}</div>
+                <div class="type-selector-node">
+                    <p style="font-weight:700; opacity:0.7;">Study format select karein:</p>
+                    <div class="type-options-row">
+                        <div class="type-btn-wrapper">
+                            <div class="type-btn" onclick="showFineNotes('${subject}', '${unit}')">
+                                <i class="fas fa-pen-nib"></i> Fine Notes
+                            </div>
+                        </div>
+                        <div class="type-btn-wrapper">
+                            <div class="type-btn" onclick="showPdfNotes('${subject}', '${unit}')">
+                                <i class="fas fa-file-pdf"></i> PDF Notes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        window.scrollTo({ top: container.offsetTop - 120, behavior: "smooth" });
+      }
+
+      function showFineNotes(subject, unit) {
+        const content = notesData[subject].units[unit].fine;
+        container.innerHTML = `
+                <button class="back-btn" onclick="selectType('${subject}', '${unit}')"><i class="fas fa-arrow-left"></i> Go Back</button>
+                <div class="reading-area">
+                    <p style="color:var(--gold-dark); font-weight:800; font-size:0.9rem; margin-bottom:10px;">${subject} &raquo; ${unit}</p>
+                    <h2>Detailed Summary</h2>
+                    <div class="fine-note-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+        window.scrollTo({ top: container.offsetTop - 120, behavior: "smooth" });
+      }
+
+      function showPdfNotes(subject, unit) {
+        container.innerHTML = `
+                <button class="back-btn" onclick="selectType('${subject}', '${unit}')"><i class="fas fa-arrow-left"></i> Go Back</button>
+                <div class="reading-area">
+                    <h2>PDF Resources</h2>
+                    <div class="pdf-download-card">
+                        <div>
+                            <p style="font-weight:800;">Full Course PDF</p>
+                            <p style="font-size:0.8rem; opacity:0.6;">Offline padhne ke liye</p>
+                        </div>
+                        <button class="back-btn" style="margin:0;">Download <i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="pdf-download-card">
+                        <div>
+                            <p style="font-weight:800;">Question Bank</p>
+                            <p style="font-size:0.8rem; opacity:0.6;">Important questions list</p>
+                        </div>
+                        <button class="back-btn" style="margin:0; background:var(--text-dim);">View <i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+            `;
+        window.scrollTo({ top: container.offsetTop - 120, behavior: "smooth" });
+      }
+
+      // --- PARTICLE PHYSICS (Golden Dust) ---
+      const canvas = document.getElementById("particle-canvas");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+
+      function initParticles() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 70; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2.5 + 1,
+            speedX: Math.random() * 0.3 - 0.15,
+            speedY: Math.random() * 0.3 + 0.1,
+            opacity: Math.random() * 0.5 + 0.3,
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          ctx.fillStyle = `rgba(255, 193, 7, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.y > canvas.height) p.y = -10;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.x < 0) p.x = canvas.width;
+        });
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", initParticles);
+      initParticles();
+      animate();
+      initTree();
+    </script>
+  </body>
+</html>

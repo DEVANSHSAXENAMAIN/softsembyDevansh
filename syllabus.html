@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BCA 4th Sem | Academic Logic Tree</title>
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Professional Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --sky-light: #f0f9ff;
+        --sky-base: #bae6fd;
+        --sky-deep: #0ea5e9;
+        --glass-bg: rgba(255, 255, 255, 0.5);
+        --glass-border: rgba(255, 255, 255, 0.7);
+        --text-dark: #0c4a6e;
+        --clay-shadow: 15px 15px 30px rgba(0, 0, 0, 0.04),
+          -10px -10px 20px rgba(255, 255, 255, 0.9);
+        --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--sky-light);
+        color: var(--text-dark);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* --- FEATHER PARTICLES --- */
+      #particle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8%;
+        z-index: 1000;
+        border-bottom: 1px solid var(--glass-border);
+      }
+
+      .nav-brand {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--sky-deep);
+        text-decoration: none;
+        letter-spacing: -1px;
+        transition: transform 0.3s;
+      }
+      .nav-brand:hover {
+        transform: scale(1.05);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: var(--transition);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--sky-deep);
+      }
+
+      /* SYLLABUS GLOW EFFECT */
+      .glow-link {
+        color: var(--sky-deep) !important;
+        text-shadow: 0 0 10px rgba(14, 165, 233, 0.5),
+          0 0 20px rgba(14, 165, 233, 0.3);
+        animation: linkPulse 2s infinite alternate;
+      }
+
+      .glow-link::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--sky-deep);
+        box-shadow: 0 0 10px var(--sky-deep);
+      }
+
+      @keyframes linkPulse {
+        from {
+          text-shadow: 0 0 5px rgba(14, 165, 233, 0.4);
+        }
+        to {
+          text-shadow: 0 0 15px rgba(14, 165, 233, 0.8),
+            0 0 25px rgba(14, 165, 233, 0.4);
+        }
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(14, 165, 233, 0.05) 0%,
+          transparent 70%
+        );
+        border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+      }
+
+      .hero-content {
+        max-width: 800px;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 20px;
+        background: linear-gradient(
+          to bottom,
+          var(--text-dark),
+          var(--sky-deep)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        color: #64748b;
+        margin-bottom: 40px;
+        font-weight: 400;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 40px;
+        animation: bounce 2s infinite;
+        color: var(--sky-deep);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* --- TREE STRUCTURE SECTION --- */
+      .tree-section {
+        padding: 120px 5%;
+        background: rgba(255, 255, 255, 0.2);
+        position: relative;
+      }
+
+      .tree-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 80px;
+      }
+
+      .tree-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+
+      /* The Main Root Box */
+      .root-box {
+        background: white;
+        padding: 25px 50px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--sky-deep);
+        box-shadow: var(--clay-shadow);
+        border: 2px solid white;
+        z-index: 10;
+        position: relative;
+        margin-bottom: 100px;
+      }
+
+      /* Connection Lines */
+      .tree-lines {
+        position: absolute;
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 40px;
+        border-bottom: 2px solid var(--sky-base);
+        border-left: 2px solid var(--sky-base);
+        border-right: 2px solid var(--sky-base);
+        border-radius: 0 0 20px 20px;
+        z-index: 1;
+      }
+
+      .tree-level {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        width: 100%;
+        z-index: 2;
+      }
+
+      /* --- CARD STYLING --- */
+      .card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        padding: 30px 20px;
+        border-radius: 25px;
+        width: 260px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        border: 2px solid var(--glass-border);
+        box-shadow: var(--clay-shadow);
+        position: relative;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        width: 2px;
+        height: 40px;
+        background: var(--sky-base);
+      }
+
+      .card:hover {
+        transform: translateY(-10px) scale(1.05);
+        background: white;
+        box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.06);
+      }
+
+      .icon-circle {
+        width: 60px;
+        height: 60px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 1.5rem;
+        color: var(--sky-deep);
+        box-shadow: inset 4px 4px 8px #e2e8f0;
+      }
+
+      /* --- UNIT & DETAIL VIEWS --- */
+      .content-view {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .syllabus-pane {
+        background: white;
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+        border-left: 8px solid var(--sky-deep);
+      }
+
+      /* --- BACK BUTTON --- */
+      .back-btn {
+        background: var(--sky-deep);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 20px;
+        font-weight: 600;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        padding: 60px 8%;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-logo {
+        font-weight: 800;
+        color: var(--text-dark);
+      }
+
+      .dev-tag {
+        background: var(--sky-light);
+        padding: 8px 15px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: var(--sky-deep);
+        font-weight: 600;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .feather {
+        position: absolute;
+        animation: fall linear infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-10vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-links {
+          gap: 15px;
+        }
+        .nav-links a {
+          font-size: 0.75rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .tree-level {
+          gap: 40px;
+        }
+        .tree-lines {
+          display: none;
+        }
+        .card::before {
+          display: none;
+        }
+        footer {
+          flex-direction: column;
+          text-align: center;
+        }
+        nav {
+          padding: 0 5%;
+          flex-direction: column;
+          height: auto;
+          padding: 15px 5%;
+          gap: 10px;
+        }
+        .nav-links {
+          gap: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="particle-container"></div>
+
+    <nav>
+      <a href="#" onclick="window.location.reload()" class="nav-brand"
+        >GSS CODING</a
+      >
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" onclick="window.location.reload()">HOME</a>
+        </li>
+        <li><a href="syllabus.html" class="glow-link">SYLLABUS</a></li>
+        <li>
+          <a href="#" onclick="alert('Secret access coming soon!')">SECRET</a>
+        </li>
+        <li>
+          <a href="NOTES.HTML">NOTES</a>
+        </li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-content">
+        <h1>Syllabus <br />MJPRU - Semester 4</h1>
+        <p>
+          Every subject, every unit, logically structured for your success.
+          Immerse yourself in the most clean and professional syllabus portal.
+        </p>
+        <button
+          onclick="document.getElementById('subjects').scrollIntoView()"
+          class="back-btn"
+          style="padding: 15px 40px; border-radius: 50px"
+        >
+          Explore Syllabus
+        </button>
+      </div>
+      <div
+        class="scroll-indicator"
+        onclick="document.getElementById('subjects').scrollIntoView()"
+      >
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </header>
+
+    <section id="subjects" class="tree-section">
+      <h2 class="tree-title">Subject Mapping</h2>
+
+      <div id="app-container" class="tree-container">
+        <!-- Dynamic Tree Content Injection -->
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">GSS CODING PORTAL</div>
+      <p style="color: #94a3b8; font-size: 0.9rem">
+        Clean. Focused. Professional.
+      </p>
+      <div class="dev-tag">Developer - Devansh Saxena</div>
+    </footer>
+
+    <script>
+      const syllabusData = {
+        "Programming in Python": {
+          icon: "fa-brands fa-python",
+          units: {
+            "Unit I: Introduction": [
+              "History and features of Python",
+              "Installing Python and setting up environment",
+              "Python basic syntax, comments",
+              "Variables, Data types (Numeric, String, List, Tuple, Dict)",
+            ],
+            "Unit II: Control Flow": [
+              "Conditional statements (if, if-else, elif)",
+              "Loops (for, while)",
+              "Loop control statements (break, continue, pass)",
+              "Range function",
+            ],
+            "Unit III: Functions & Modules": [
+              "Defining and calling functions",
+              "Arguments and return values",
+              "Scope of variables",
+              "Standard libraries and importing modules",
+            ],
+            "Unit IV: File Handling": [
+              "Opening, reading, and writing files",
+              "File pointers and positions",
+              "Working with directories",
+              "Exceptions and Error Handling",
+            ],
+            "Unit V: Advanced Topics": [
+              "Introduction to OOP in Python",
+              "Classes and Objects",
+              "Inheritance and Polymorphism",
+              "Regular Expressions",
+            ],
+          },
+        },
+        "Unix & Shell Programming": {
+          icon: "fa-terminal",
+          units: {
+            "Unit I: Unix Basics": [
+              "Architecture of Unix",
+              "Features of Unix",
+              "Standard Unix commands",
+              "File system hierarchy",
+            ],
+            "Unit II: File Permissions": [
+              "Chmod, Chown, Chgrp",
+              "File and Directory permissions",
+              "Hard links vs Soft links",
+              "Umask",
+            ],
+            "Unit III: Vi Editor & Grep": [
+              "Working with Vi Editor",
+              "Regular Expressions",
+              "Grep command and options",
+              "Filters like sed and awk (intro)",
+            ],
+            "Unit IV: Shell Scripting I": [
+              "Shell variables and environment",
+              "Reading user input",
+              "Control structures in Shell",
+              "Positional parameters",
+            ],
+            "Unit V: Shell Scripting II": [
+              "Arithmetic operations",
+              "Case statement",
+              "Until and while loops",
+              "Writing advanced scripts",
+            ],
+          },
+        },
+        "Software Engineering": {
+          icon: "fa-diagram-project",
+          units: {
+            "Unit I: Intro to SE": [
+              "SDLC Models (Waterfall, Spiral, Agile)",
+              "Software Quality attributes",
+              "System engineering process",
+            ],
+            "Unit II: Requirement Eng": [
+              "Feasibility study",
+              "Requirement gathering techniques",
+              "SRS documentation",
+              "Validation",
+            ],
+            "Unit III: Software Design": [
+              "Coupling and Cohesion",
+              "Architectural styles",
+              "UI Design principles",
+              "Modular design",
+            ],
+            "Unit IV: Software Testing": [
+              "White Box vs Black Box",
+              "Unit, Integration, and System testing",
+              "Regression testing",
+              "Testing tools",
+            ],
+            "Unit V: Maintenance": [
+              "Software Re-engineering",
+              "Configuration management",
+              "Software Reliability",
+              "Cost Estimation models",
+            ],
+          },
+        },
+        "Accounting & Financial Management": {
+          icon: "fa-calculator",
+          units: {
+            "Unit I: Fundamentals": [
+              "Basic accounting concepts and conventions",
+              "Golden rules of accounting",
+              "Journal and Ledger",
+            ],
+            "Unit II: Final Accounts": [
+              "Trial Balance",
+              "Trading Account",
+              "Profit and Loss Account",
+              "Balance Sheet preparation",
+            ],
+            "Unit III: Cost Accounting": [
+              "Elements of cost",
+              "Preparation of Cost Sheet",
+              "Budgetary control",
+              "Standard costing",
+            ],
+            "Unit IV: Management Accounting": [
+              "Ratio analysis",
+              "Cash flow statement",
+              "Fund flow statement",
+              "Decision making",
+            ],
+            "Unit V: Tally & Automation": [
+              "Computerized accounting",
+              "Working with Tally",
+              "Automated ledgers",
+              "GST basics",
+            ],
+          },
+        },
+        "Computer Networks": {
+          icon: "fa-network-wired",
+          units: {
+            "Unit I: Basics": [
+              "Network topologies",
+              "OSI Model vs TCP/IP",
+              "Guided and Unguided media",
+              "Analog vs Digital signals",
+            ],
+            "Unit II: Data Link Layer": [
+              "Error detection and correction",
+              "Framing",
+              "Flow control (Stop & Wait, Sliding Window)",
+              "Ethernet",
+            ],
+            "Unit III: Network Layer": [
+              "IPv4 and IPv6 addressing",
+              "Routing algorithms (Distance Vector, Link State)",
+              "Subnetting",
+              "ICMP",
+            ],
+            "Unit IV: Transport Layer": [
+              "TCP vs UDP",
+              "Three-way handshake",
+              "Congestion control",
+              "QoS parameters",
+            ],
+            "Unit V: Application Layer": [
+              "DNS, HTTP, FTP, SMTP",
+              "Network Security basics",
+              "Firewalls",
+              "Cryptography",
+            ],
+          },
+        },
+      };
+
+      const container = document.getElementById("app-container");
+
+      function showTree() {
+        let html = `
+                <div class="root-box">BCA 4TH SEMESTER</div>
+                <div class="tree-lines"></div>
+                <div class="tree-level">
+            `;
+        for (const subject in syllabusData) {
+          html += `
+                    <div class="card" onclick="showUnits('${subject}')">
+                        <div class="icon-circle"><i class="fas ${syllabusData[subject].icon}"></i></div>
+                        <h3 style="font-size:1.1rem;">${subject}</h3>
+                    </div>
+                `;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+
+      function showUnits(subject) {
+        let html = `
+                <div class="content-view">
+                    <button class="back-btn" onclick="showTree()"><i class="fas fa-arrow-left"></i> Back to Tree</button>
+                    <h2 style="margin-bottom:30px; font-weight:800;">${subject} <span style="font-weight:400; color:#64748b;">(Units)</span></h2>
+                    <div class="tree-level" style="justify-content: flex-start;">
+            `;
+        const units = syllabusData[subject].units;
+        for (const unitTitle in units) {
+          html += `
+                    <div class="card" style="width: 300px; text-align: left; padding: 25px;" onclick="showDetails('${subject}', '${unitTitle}')">
+                        <div class="icon-circle" style="margin:0 0 15px 0;"><i class="fas fa-book-open"></i></div>
+                        <h3 style="font-size:1.1rem;">${
+                          unitTitle.split(":")[0]
+                        }</h3>
+                        <p style="font-size:0.85rem; opacity:0.6;">${
+                          unitTitle.split(":")[1] || ""
+                        }</p>
+                    </div>
+                `;
+        }
+        html += `</div></div>`;
+        container.innerHTML = html;
+        window.scrollTo({
+          top: document.getElementById("subjects").offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+
+      function showDetails(subject, unitTitle) {
+        const topics = syllabusData[subject].units[unitTitle];
+        let html = `
+                <div class="content-view">
+                    <button class="back-btn" onclick="showUnits('${subject}')"><i class="fas fa-arrow-left"></i> Back to Units</button>
+                    <div class="syllabus-pane">
+                        <p style="color:var(--sky-deep); font-weight:700; text-transform:uppercase; letter-spacing:1px;">${subject}</p>
+                        <h2 style="font-size:2.2rem; font-weight:800; margin-bottom:30px;">${unitTitle}</h2>
+                        <ul style="list-style:none;">
+            `;
+        topics.forEach((topic, i) => {
+          html += `
+                    <li style="padding: 15px 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 15px; animation: fadeIn 0.5s ease ${
+                      i * 0.05
+                    }s forwards;">
+                        <span style="color:var(--sky-deep);"><i class="fas fa-feather-pointed"></i></span>
+                        ${topic}
+                    </li>`;
+        });
+        html += `</ul></div></div>`;
+        container.innerHTML = html;
+        window.scrollTo({
+          top: document.getElementById("subjects").offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+
+      // Particle System
+      function createFeather() {
+        const container = document.getElementById("particle-container");
+        const feather = document.createElement("div");
+        feather.className = "feather";
+        feather.innerHTML = "🪶";
+
+        const startX = Math.random() * window.innerWidth;
+        const size = Math.random() * 0.5 + 0.5;
+        const duration = Math.random() * 8 + 8;
+        const delay = Math.random() * 5;
+
+        feather.style.left = startX + "px";
+        feather.style.fontSize = size + "rem";
+        feather.style.color = "#bae6fd";
+        feather.style.animationDuration = duration + "s";
+        feather.style.animationDelay = delay + "s";
+
+        container.appendChild(feather);
+        setTimeout(() => feather.remove(), (duration + delay) * 1000);
+      }
+
+      setInterval(createFeather, 600);
+      showTree();
+    </script>
+  </body>
+</html>
